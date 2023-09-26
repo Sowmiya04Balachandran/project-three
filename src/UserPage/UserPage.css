@@ -1,0 +1,25 @@
+/* UserPage.css */
+.user-page {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .medicine-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .medicine-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    max-width: 300px;
+    text-align: left;
+  }
+  
+  .out-of-stock {
+    color: red;
+  }
+
+  
