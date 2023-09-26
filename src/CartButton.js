@@ -1,31 +1,47 @@
-// import React, { useContext } from 'react';
-// import  CartContext  from './CartContext';
-// import './CartButton.css'; // Import CSS
+import React, { useState, useEffect } from 'react';
+import { useCartContext } from './store/CartContext';
+import classes from './CartButton.module.css';
+import CartModal from './CartModal';
 
-// const CartButton = () => {
-//   const { cart, openCart } = useContext(CartContext);
+const CartButton = (props) => {
+  const { state, dispatch } = useCartContext();
+  const { cart } = state;
+  const [modalOpen, setModalOpen] = useState(false);
 
-//   return (
-//     <button onClick={openCart} className="cart-button">
-//       Cart ({cart.length})
-//     </button>
-//   );
-// };
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
-// export default CartButton;
+  const [cartCount, setCartCount] = useState(0);
 
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useCartContext } from './CartContext';
+  useEffect(() => {
+    setCartCount(cart.length);
+  }, [cart]);
 
-function CartButton() {
-  const { cartState } = useCartContext();
+  const handleAddToCart = (item) => {
+    dispatch({ type: 'ADD_TO_CART', payload: item });
+  };
 
-  return (
-    <div>
-      <Link to="/cart">Cart ({cartState.cart.length})</Link>
+  const handleRemoveFromCart = (item) => {
+    dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+  };
+
+  return (  
+    <div className={classes['cart-button-container']}>
+      <button onClick={toggleModal} className={classes['cart-button']}>
+        Cart <sup>{cartCount}</sup>
+      </button>
+      {modalOpen && (
+        <CartModal
+          cartItems={cart}
+          onClose={toggleModal}
+          onAdd={handleAddToCart}
+          onRemove={handleRemoveFromCart}
+        />
+      )}
     </div>
   );
-}
+};
 
 export default CartButton;
+

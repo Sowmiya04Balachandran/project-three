@@ -1,6 +1,6 @@
-
 import React, { useRef } from 'react';
-import { useCartContext } from '../CartContext';
+import { useCartContext } from './store/CartContext';
+import styles from './AdminPage.module.css'
 
 function AdminPage() {
   const { dispatch } = useCartContext();
@@ -17,8 +17,8 @@ function AdminPage() {
       quantity: parseInt(quantityRef.current.value),
     };
 
-    // Dispatch an action to add medicine to the shared state
-    dispatch({ type: 'ADD_TO_CART', payload: newMedicine });
+    // Dispatch an action to add medicine to the adminMedicines state
+    dispatch({ type: 'ADD_ADMIN_MEDICINE', payload: newMedicine });
 
     // Clear input fields
     medicineNameRef.current.value = '';
@@ -28,9 +28,9 @@ function AdminPage() {
   };
 
   return (
-    <div>
-      <h2>Admin Page</h2>
-      <div>
+    <div className={styles['admin-page']}> {/* Apply the CSS class */}
+    <h2>Admin Page</h2>
+    <div className={styles['medicine-form']}> {/* Apply the CSS class */}
         {/* Input fields for adding medicines */}
         <label htmlFor="medicine">Medicine Name</label>
         <input type="text" id="medicine" ref={medicineNameRef} required />

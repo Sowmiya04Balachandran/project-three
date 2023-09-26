@@ -1,20 +1,27 @@
+// MainNavigation.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import classes from './Mainnavigation.module.css';
+import { NavLink } from 'react-router-dom';
 
 const MainNavigation = () => {
   return (
-    <div>
+    <header className={classes.header} >
+    
       <nav>
-        <ul>
+        <ul className={classes.list}>
           <li>
-            <Link to="/admin">Admin</Link>
+            <NavLink to='/home'>Home</NavLink>
           </li>
           <li>
-            <Link to="/store">Store</Link>
+            <NavLink to="/admin">Admin</NavLink>
+          </li>
+          <li>
+            <NavLink to="/store">Store</NavLink>
           </li>
         </ul>
       </nav>
-    </div>
+      </header>
   );
 };
 

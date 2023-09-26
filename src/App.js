@@ -34,34 +34,33 @@
 // }
 
 // export default App;
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { CartProvider } from './CartContext';
-import AdminPage from './AdminPage/AdminPage';
-import UserPage from './UserPage/userpage';
-
+import { CartProvider } from './store/CartContext';
+import AdminPage from './AdminPage';
+import UserPage from './userpage';
+import HomePage from './Home';
 import MainNavigation from './MainNavigation'; // Import MainNavigation
-
 import './App.css';
+//import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App() {
   return (
     <CartProvider>
       <Router>
-        <div className="App">
-          <header className="App-header">
-            <h1>Medicine Store</h1>
-            {/* Use the MainNavigation component */}
+       <div>
             <MainNavigation />
-            
-          </header>
+         
           <main>
             <Switch>
-              <Route path="/admin" component={AdminPage} />
-              <Route path="/store" component={UserPage} />
+              
+              <Route path='/home' exact ><HomePage/></Route>
+              <Route path="/admin" exact><AdminPage/></Route>
+              <Route path="/store" exact><UserPage/></Route>
             </Switch>
           </main>
-        </div>
+          </div>
       </Router>
     </CartProvider>
   );

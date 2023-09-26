@@ -1,0 +1,11 @@
+/* CartButton.css */
+.cart-button {
+  background-color: blue;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 117px;
+  right: 0;
+}

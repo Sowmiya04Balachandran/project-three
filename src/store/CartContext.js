@@ -146,57 +146,43 @@
 
 // export default CartContext;
 
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+// CartContext.js
 
-const CartContext = createContext();
+import React, { createContext, useContext, useReducer } from 'react';
 
-export const useCartContext = () => useContext(CartContext);
+const initialState = {
+  cart: [],
+  adminMedicines: [],
+};
 
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
-      // Handle adding an item to the cart
-      const updatedCartAdd = [...state.cart, action.payload];
-      return { ...state, cart: updatedCartAdd };
-
-    case 'REMOVE_FROM_CART':
-      // Handle removing an item from the cart
-      const updatedCartRemove = state.cart.filter(
-        (item) => item.id !== action.payload
-      );
-      return { ...state, cart: updatedCartRemove };
-
-    case 'UPDATE_CART':
-      // Handle updating the cart
-      const updatedCart = state.cart.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...item, quantity: action.payload.quantity };
-        }
-        return item;
-      });
-      return { ...state, cart: updatedCart };
-
+      return { ...state, cart: [...state.cart, action.payload] };
+    case 'ADD_ADMIN_MEDICINE':
+      return { ...state, adminMedicines: [...state.adminMedicines, action.payload] };
     default:
       return state;
   }
 };
 
+export const CartContext = createContext();
+
 export const CartProvider = ({ children }) => {
-  const initialState = {
-    cart: [],
-    total: 0,
-  };
-
-  const [cartState, dispatch] = useReducer(cartReducer, initialState);
-
-  useEffect(() => {
-    // You can handle fetching cart data from the API here if needed
-  }, []);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   return (
-    <CartContext.Provider value={{ cartState, dispatch }}>
+    <CartContext.Provider value={{ state, dispatch }}>
       {children}
     </CartContext.Provider>
   );
 };
 
+// Custom hook to access the context values
+export const useCartContext = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCartContext must be used within a CartProvider');
+  }
+  return context;
+};
